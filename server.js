@@ -9,6 +9,8 @@ let gfs;
 //Connect database
 connectDB();
 
+//Init middleware
+app.use(express.json({ extended: false }));
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
