@@ -7,6 +7,7 @@ const { check, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
 
 const User = require('../../models/User');
+const Org = require('../../models/Org');
 
 // @route   GET api/users
 // @desc    Get all users
@@ -25,7 +26,7 @@ router.post('/', [
     check('name', 'name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 8 or more characters').isLength({ min: 8 }),
-    check('birthdate', 'Please enter a valid birthdate').isDate('MM/dd/yyyy').
+    check('birthdate', 'Please enter a valid birthdate').isDate('yyyy-MM-dd').
         isBefore(new Date().toLocaleDateString('en-US')),
 
 ], async (req, res) => {
@@ -45,7 +46,7 @@ router.post('/', [
         if (user) {
             return res
                 .status(400)
-                .json({ errors: [{ msg: 'User already exists' }] });
+                .json({ errors: [{ msg: 'Email already exists' }] });
         }
 
         user = new User({
@@ -56,7 +57,7 @@ router.post('/', [
         });
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(password, salt);
-        console.log(user.birthdate);
+
         await user.save();
 
         const payload = {

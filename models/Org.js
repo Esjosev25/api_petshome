@@ -7,7 +7,6 @@ const OrgSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: true,
         maxLength: 150
     },
     email: {
@@ -18,6 +17,9 @@ const OrgSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    description: {
+        type: String,
     },
     verification: {
         type: Boolean,

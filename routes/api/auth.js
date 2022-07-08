@@ -32,7 +32,7 @@ router.post('/users', [
     check('password', 'Password is required').exists()
 
 ], async (req, res) => {
-    console.log('hola');
+
     const errores = validationResult(req);
     if (!errores.isEmpty()) {
         return res.status(400).json({ errores: errores.array() });

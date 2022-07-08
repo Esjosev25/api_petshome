@@ -16,7 +16,6 @@ router.get('/', (req, res) => res.send('org route'));
 // @access  Public
 router.post('/', [
     check('name', 'name organizations is required').not().isEmpty(),
-    check('location', 'Please include a valid location').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
     check('password', 'Please enter a password with 8 or more characters').isLength({ min: 8 }),
 ], async (req, res) => {
@@ -24,17 +23,16 @@ router.post('/', [
     if (!errores.isEmpty()) {
         return res.status(400).json({ errores: errores.array() });
     }
-    const { name, location, email, password } = req.body;
+    const { name, email, password } = req.body;
     try {
 
         let org = await Org.findOne({ email })
         //see if organization exists
         if (org) {
-            return res.status(400).json({ errors: [{ msg: 'Organization already exists' }] });
+            return res.status(400).json({ errors: [{ msg: 'Email already exists' }] });
         }
         org = new Org({
             name,
-            location,
             email,
             password
         });
