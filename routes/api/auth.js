@@ -80,7 +80,7 @@ router.post('/users', [
 
 router.get('/orgs', auth, async (req, res) => {
     try {
-        const org = await Org.findById(req.org.id).select('-password');
+        const org = await Org.findById(req.user.id).select('-password');
         res.json(org)
     } catch (error) {
         console.error(error);
