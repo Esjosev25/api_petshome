@@ -13,7 +13,7 @@ const Org = require('../../models/Org');
 // @access  Public
 router.get('/users', auth, async (req, res) => {
     try {
-        console.log(req.user.id)
+
         const user = await User.findById(req.user.id).select('-password');
 
         res.json(user)
@@ -82,7 +82,7 @@ router.post('/users', [
 
 router.get('/orgs', auth, async (req, res) => {
     try {
-        console.log('hola')
+
         const org = await Org.findById(req.user.id).select('-password');
         res.json(org)
     } catch (error) {
