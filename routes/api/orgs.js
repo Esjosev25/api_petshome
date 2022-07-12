@@ -40,11 +40,11 @@ router.post('/', [
 
         org.password = await bcrypt.hash(password, salt);
 
-        console.log('todo bien');
+
         await org.save();
 
         const payload = {
-            org: { id: org.id }
+            user: { id: org.id }
         }
 
         jwt.sign(payload,
